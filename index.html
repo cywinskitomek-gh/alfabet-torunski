@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Alfabet Toruński</title>
+<meta name="description" content="Alfabet Toruński – cykl 22 utworów Tomasza Cywińskiego o miejscach Torunia, komponowanych algorytmicznie w OpenMusic.">
+<link rel="icon" href="herb-torunia.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Uklad: ciemna scena jak w filmach; litery palety jako glowny motyw, pod nimi miejsca, metoda i stypendium */
+:root{
+  --bg:#121317; --bg2:#1a1c22; --ink:#ece7dc; --muted:#9c9890; --line:#2a2d35; --gold:#e9cf6a;
+  --display:"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --body:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#f6f4ef; --bg2:#ece9e1; --ink:#1b1c20; --muted:#5f5c55; --line:#d9d5cb; --gold:#8a6d12; color-scheme:light}}
+:root[data-theme="light"]{--bg:#f6f4ef; --bg2:#ece9e1; --ink:#1b1c20; --muted:#5f5c55; --line:#d9d5cb; --gold:#8a6d12; color-scheme:light}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto}
+a{color:var(--ink);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+header.hero{padding-block:clamp(40px,8vw,96px) 28px}
+.kicker{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(2.6rem,8vw,5.4rem);line-height:.98;margin:0;letter-spacing:-.02em;text-wrap:balance}
+.lede{max-width:40rem;font-size:1.12rem;color:var(--ink);margin:22px 0 0}
+.letters{display:grid;grid-template-columns:repeat(11,1fr);gap:clamp(4px,1vw,10px);margin:40px 0 0}
+.letters span{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,5vw,3.4rem);line-height:1;text-align:center;
+  padding-block:.35em;border-radius:6px;background:var(--bg2)}
+section{padding-block:56px;border-top:1px solid var(--line)}
+h2{font-family:var(--display);font-weight:500;font-size:clamp(1.6rem,3.4vw,2.2rem);margin:0 0 20px;letter-spacing:-.01em}
+p{max-width:42rem;margin:0 0 14px}
+.muted{color:var(--muted)}
+.places{list-style:none;margin:0;padding:0;columns:2 300px;column-gap:40px}
+.places li{break-inside:avoid;display:grid;grid-template-columns:2.2em 1fr;gap:10px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--line)}
+.places b{font-family:var(--display);font-size:1.3rem;font-weight:700}
+.places .soon{color:var(--muted);font-style:italic}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:760px){.cols{grid-template-columns:1fr}.letters{grid-template-columns:repeat(6,1fr)}}
+.wheel{width:100%;max-width:520px;height:auto;display:block;margin:0 auto}
+.facts{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:8px}
+.facts li{font-family:var(--mono);font-size:.86rem;color:var(--muted)}
+.facts li span{color:var(--ink)}
+.btn{display:inline-block;font-weight:500;padding:11px 18px;border:1px solid var(--line);border-radius:8px;text-decoration:none;background:var(--bg2)}
+.btn:hover{border-color:var(--gold)}
+footer{border-top:1px solid var(--line);padding-block:40px 56px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+footer img{width:72px;height:auto;flex:none}
+footer .grant{font-size:1rem;max-width:34rem;margin:0}
+footer .who{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin:6px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">Tomasz Cywiński · muzyka i obraz · 2026</p>
+  <h1>Alfabet Toruński</h1>
+  <p class="lede">Cykl 22 krótkich utworów audiowizualnych o miejscach Torunia. Każda litera alfabetu to jedno miejsce, jeden kolor i jeden obszar harmonii; muzykę tworzą algorytmy napisane przez kompozytora w OpenMusic.</p>
+  <div class="letters" id="letters" aria-label="22 litery cyklu w kolorach palety"></div>
+</header>
+
+<section id="cykl">
+  <h2>O cyklu</h2>
+  <p>Litera każdego odcinka wynika z nazwy własnej miejsca, a nie z rodzaju obiektu: Ratusz Staromiejski należy do litery S, Ratusz Nowomiejski do N, Brama Żeglarska do Ż. Jedna litera może mieć kilka miejsc.</p>
+  <p>Każdy film trwa około trzech minut i ma swoją wersję w postaci krótkich fragmentów (Shorts). Cykl pozostaje otwarty – po 22 literach mogą powstawać kolejne odcinki.</p>
+</section>
+
+<section id="miejsca">
+  <h2>Miejsca</h2>
+  <ul class="places" id="places"></ul>
+</section>
+
+<section id="metoda">
+  <div class="cols">
+    <div>
+      <h2>Metoda</h2>
+      <p>Materiał melodyczny i harmoniczny powstaje w OpenMusic (IRCAM), w bibliotece funkcji Common Lisp pisanej przez kompozytora. Podstawą jest własny model napięcia harmonicznego (tension), oparty na niewielkiej, ok. 2-centowej różnicy między kwintą temperowaną a czystą.</p>
+      <p>Wartości napięcia tworzą koło. Każda litera ma na nim dwa bieguny, jak igła kompasu: główny pod kolorem litery i słabszy naprzeciwko, w kolorze dopełniającym. Te same barwy wyznaczają kolorystykę obrazu.</p>
+      <ul class="facts">
+        <li>liter <span>22</span> · co <span>6</span> kroków napięcia</li>
+        <li>koło napięcia <span>113–244</span> · igła <span>66</span> kroków</li>
+        <li>barwa litery <span>co 360°/22</span>, A – czerwień</li>
+      </ul>
+    </div>
+    <svg class="wheel" id="wheel" viewBox="0 0 520 520" role="img" aria-label="Koło napięcia z biegunami 22 liter"></svg>
+  </div>
+</section>
+
+<section id="filmy">
+  <h2>Filmy</h2>
+  <p>Kolejne odcinki ukazują się na kanale YouTube w playliście „Alfabet Toruński”.</p>
+  <p><a class="btn" href="https://www.youtube.com/@tomaszcywinski" rel="noopener">Kanał @tomaszcywinski</a></p>
+</section>
+
+<footer>
+  <img src="herb-torunia.svg" alt="Herb Miasta Torunia">
+  <div>
+    <p class="grant">Zrealizowano w ramach stypendium Miasta Torunia w dziedzinie kultury</p>
+    <p class="who">Tomasz Cywiński – kompozytor, aranżer, orkiestrator · Toruń</p>
+  </div>
+</footer>
+
+</div>
+<script>
+(() => {
+  const L = "ABCDEFGHIJKLMNOPRSTUWZ";
+  const hue = k => { const s = 360 / 22; return ((361 - k * s - s / 2) % 360 + 360) % 360; };
+  const hsv = (h, s, v) => { const f = n => { const k = (n + h / 60) % 6; return v - v * s * Math.max(0, Math.min(k, 4 - k, 1)); };
+    return `rgb(${[f(5), f(3), f(1)].map(x => Math.round(x * 255)).join(",")})`; };
+  const col = k => hsv(hue(k), 0.72, 0.82);
+
+  const box = document.getElementById("letters");
+  [...L].forEach((c, k) => { const s = document.createElement("span"); s.textContent = c; s.style.color = col(k); box.append(s); });
+
+  const P = {A:["Arsenał","Dwór Artusa"],B:["Ulica Bydgoska"],C:["Łuk Cezara"],D:["Ruiny Zamku Dybów"],E:["Dom Eskenów"],
+    F:["Pomnik Flisaka"],G:["Kamienica pod Gwiazdą"],J:["Katedra św. św. Janów"],K:["Pomnik Mikołaja Kopernika"],
+    L:["Ulica Łazienna","Pomnik Samuela Bogumiła Lindego"],M:["Książnica Miejska"],N:["Ratusz Nowomiejski"],O:["Muzeum Okręgowe"],
+    P:["Most Pauliński"],S:["Ratusz Staromiejski","Ulica Szeroka","Rynek Staromiejski","Fosa Staromiejska"],T:["Muzeum Twierdzy Toruń"],
+    U:["Muzeum Uniwersyteckie"],W:["Centrum Sztuki Współczesnej"],Z:["Brama Żeglarska"]};
+  const shown = {L:["Ł","L"], Z:["Ż"]};
+  const ul = document.getElementById("places");
+  [...L].forEach((c, k) => {
+    const list = P[c] || [null];
+    list.forEach((name, i) => {
+      const li = document.createElement("li"), b = document.createElement("b"), t = document.createElement("span");
+      b.textContent = (shown[c] && shown[c][i]) || c; b.style.color = col(k);
+      if (name) t.textContent = name; else { t.textContent = "w przygotowaniu"; t.className = "soon"; }
+      li.append(b, t); ul.append(li);
+    });
+  });
+
+  // kolo napiecia 113..244 (model :circle)
+  const svg = document.getElementById("wheel"), NS = "http://www.w3.org/2000/svg";
+  const lo = 113, n = 132, c = 260, r = 165, ring = 16;
+  const ang = t => Math.PI / 180 * (-90 + 360 * (((t - lo) % n + n) % n) / n);
+  const X = (t, R) => c + R * Math.cos(ang(t)), Y = (t, R) => c + R * Math.sin(ang(t));
+  const el = (tag, a) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); svg.append(e); return e; };
+  const tHue = t => ((hue(0) - (t - lo) * 360 / n) % 360 + 360) % 360;
+  for (let t = lo; t < lo + n; t++)
+    el("path", {d: `M ${X(t - .5, r)} ${Y(t - .5, r)} A ${r} ${r} 0 0 1 ${X(t + .55, r)} ${Y(t + .55, r)}`, stroke: hsv(tHue(t), .72, .82), "stroke-width": ring, fill: "none"});
+  const muted = getComputedStyle(document.documentElement).getPropertyValue("--muted").trim();
+  for (let k = 0; k < 22; k++) {
+    const p1 = lo + k * 6, p2 = lo + (k * 6 + 66) % n;
+    // igla: od bieguna 1 do srodka w barwie litery, dalej do bieguna 2 w barwie przeciwnej
+    const rn = r - 51, x1 = X(p1, rn), y1 = Y(p1, rn), x2 = X(p2, rn), y2 = Y(p2, rn), mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+    el("line", {x1, y1, x2: mx, y2: my, stroke: col(k), "stroke-opacity": .75, "stroke-width": 1.4});
+    el("line", {x1: mx, y1: my, x2, y2, stroke: hsv((hue(k) + 180) % 360, .72, .82), "stroke-opacity": .75, "stroke-width": 1.4});
+    el("circle", {cx: X(p2, r - 17), cy: Y(p2, r - 17), r: 3.8, fill: hsv((hue(k) + 180) % 360, .72, .82), stroke: col(k), "stroke-width": 1});
+    el("circle", {cx: X(p1, r + 17), cy: Y(p1, r + 17), r: 5.4, fill: col(k)});
+    const tx = el("text", {x: X(p1, r + 38), y: Y(p1, r + 38), fill: col(k), "font-size": 17, "font-weight": 700,
+      "font-family": "Bricolage Grotesque, Arial, sans-serif", "text-anchor": "middle", "dominant-baseline": "central"});
+    tx.textContent = L[k];
+    const tn = el("text", {x: X(p1, r + 60), y: Y(p1, r + 60), fill: muted, "font-size": 10, "font-family": "IBM Plex Mono, monospace",
+      "text-anchor": "middle", "dominant-baseline": "central"});
+    tn.textContent = p1;
+  }
+})();
+</script>
+</body>
+</html>
